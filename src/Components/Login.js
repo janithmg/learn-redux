@@ -1,24 +1,18 @@
 import { useContext, useRef } from "react";
 import { userData } from "../Context/UserAuth";
+import {submitHandle} from '../Utils/authValidate'
 
 const Login = () => {
-  const { userDetals, setUserDetals } = useContext(userData);
+  const { userDetails, setuserDetails } = useContext(userData);
 
   const usernameRef = useRef();
   const passwordRef = useRef();
-const submitHandle = ()=>{
-    setUserDetals(pre=>({
-        ...pre,
-        userId: usernameRef.current.value,
-        password: passwordRef.current.value,
-        name: usernameRef.current.value
-    }))
-}
+
 
   return (
     <div>
-      {userDetals.userId ? (
-        <p>You are logged, Your name is : {userDetals.name}</p>
+      {userDetails.userId ? (
+        <p>You are logged, Your name is : {userDetails.name}</p>
       ) : (
         <>
           <span>Username : </span>
@@ -27,7 +21,7 @@ const submitHandle = ()=>{
           <span>Password : </span>
           <input ref={passwordRef} type="password" placeholder="password" />
           <br/>
-          <button onClick={submitHandle}>Submit</button>
+          <button onClick={()=>submitHandle(usernameRef, passwordRef, setuserDetails)}>Submit</button>
         </>
       )}
     </div>
