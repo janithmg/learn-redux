@@ -1,19 +1,10 @@
 import { useContext, useRef } from "react";
 import { userActivity } from "../Context/UserActivity";
 import { userData } from "../Context/UserAuth";
-import { submitUserActivity } from "../Utils/authValidate";
+import { Action } from "../Reducers/userActivityReducer";
 
 const UserInput = () => {
-  const {
-    image,
-    name,
-    city,
-    position,
-    setImage,
-    setName,
-    setCity,
-    setPosition,
-  } = useContext(userActivity);
+  const { state, setState } = useContext(userActivity);
 
   const { userDetails } = useContext(userData);
 
@@ -26,7 +17,7 @@ const UserInput = () => {
     <div>
       <br />
       <br />
-      {userDetails.userId ? 
+      {userDetails.userId ? (
         <div>
           <span>Image :</span>
           <input ref={imageRef} type="text" placeholder="image url" /> <br />
@@ -39,30 +30,29 @@ const UserInput = () => {
           <br />
           <button
             onClick={() =>
-              submitUserActivity(
-                imageRef,
-                nameRef,
-                cityRef,
-                positionRef,
-                setImage,
-                setName,
-                setCity,
-                setPosition
-              )
+              setState({
+                type: Action.setData,
+                data: {
+                  image: imageRef.current.value,
+                  name: nameRef.current.value,
+                  city: cityRef.current.value,
+                  position: positionRef.current.value,
+                },
+              })
             }
           >
             Submit
           </button>
           <br />
           <br />
-          <p>{image}</p>
-          <p>{name}</p>
-          <p>{city}</p>
-          <p>{position}</p>
+          <p>{state.image}</p>
+          <p>{state.name}</p>
+          <p>{state.city}</p>
+          <p>{state.position}</p>
         </div>
-       : 
+      ) : (
         ""
-      }
+      )}
     </div>
   );
 };

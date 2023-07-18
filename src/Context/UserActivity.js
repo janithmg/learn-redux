@@ -1,23 +1,21 @@
-import { createContext, useState } from "react";
+import { createContext, useReducer } from "react";
+import { userActivityReducer } from "../Reducers/userActivityReducer";
 
 export const userActivity = createContext({});
 
 const UserActivity = ({ children }) => {
-  const [image, setImage] = useState("");
-  const [name, setName] = useState("");
-  const [city, setCity] = useState("");
-  const [position, setPosition] = useState("");
+  const [state, setState] = useReducer(userActivityReducer,{
+    image:'',
+    name:'',
+    city:'',
+    position:'',
+  })
+  
   return (
     <userActivity.Provider
       value={{
-        image,
-        name,
-        city,
-        position,
-        setImage,
-        setName,
-        setCity,
-        setPosition,
+        state,
+        setState,
       }}
     >
       {children}
